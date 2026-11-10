@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#244b3d">
+<title>대나무숲 | 마음이 쉬어가는 곳</title>
+<style>
+:root{--green:#244b3d;--leaf:#dce9d9;--cream:#faf8f0;--ink:#29352e;--muted:#748078}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif}
+header{background:linear-gradient(145deg,#183d31,#47745b);color:white;padding:28px 20px 34px}
+.wrap{max-width:760px;margin:auto}.brand{font-size:14px;letter-spacing:.12em;color:#dce9d9}.hero{padding:38px 0 24px}.hero h1{font-size:clamp(30px,7vw,48px);line-height:1.25;margin:0 0 14px}.hero p{line-height:1.8;color:#e1ebe2;margin:0}.bamboo{font-size:46px;margin-top:20px;opacity:.9}
+main{max-width:760px;margin:-12px auto 0;padding:0 16px 50px}.panel{background:white;border-radius:20px;padding:22px;box-shadow:0 8px 30px #1c3a2410;margin-bottom:18px}
+h2{font-size:20px;margin:0 0 8px}.hint{color:var(--muted);font-size:13px;margin:0 0 18px}
+.moods{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.moods button{border:1px solid #d9e1d9;background:#fff;border-radius:24px;padding:9px 13px;color:var(--ink);font-size:14px}.moods button.active{background:var(--leaf);border-color:#8da993}
+textarea{width:100%;min-height:140px;resize:vertical;border:1px solid #dfe5dd;border-radius:14px;padding:14px;font:inherit;line-height:1.7;outline-color:#6d9279}
+.primary{width:100%;border:0;border-radius:14px;background:var(--green);color:white;padding:15px;font-size:16px;margin-top:13px}
+.note{font-size:12px;color:var(--muted);line-height:1.6;margin-top:12px}
+.post{border-top:1px solid #edf0eb;padding:16px 0}.tag{display:inline-block;background:#edf4eb;color:#45634d;border-radius:20px;padding:5px 10px;font-size:12px;margin-bottom:8px}.post p{line-height:1.75;margin:4px 0 12px;white-space:pre-wrap}.empathy{border:0;background:#f3f6f1;color:#45634d;padding:9px 12px;border-radius:20px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:12px}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+<div class="brand">🌿 BAMBOO FOREST</div>
+<div class="hero"><h1>마음이 쉬어가는 곳.</h1><p>누구에게도 하지 못한 이야기,<br>여기서는 괜찮아.<br>판단하지 않고, 훈계하지 않고, 먼저 들어줄게.</p><div class="bamboo">🎋 🌱 🎋</div></div>
+</div></header>
+<main>
+<section class="panel">
+<h2>오늘은 어떤 마음이야?</h2><p class="hint">이름 없이, 괜찮은 척하지 않고 편하게 적어봐.</p>
+<div class="moods" id="moods"><button class="active">답답해</button><button>화가 나</button><button>속상해</button><button>억울해</button><button>외로워</button><button>그냥 지쳤어</button></div>
+<textarea id="story" maxlength="1200" placeholder="오늘 있었던 일, 누구에게도 하지 못했던 말…&#10;여기서는 편하게 털어놓아도 돼."></textarea>
+<button class="primary" id="send">마음속 이야기 꺼내놓기</button>
+<p class="note">현재는 첫 체험 버전이야. 작성한 글은 이 브라우저에만 임시로 표시되며 다른 사람에게 공개되거나 서버에 저장되지 않아. 실명·연락처 등 개인정보나 특정인을 위협하는 내용은 적지 말아줘.</p>
+</section>
+<section class="panel"><h2>누군가의 이야기</h2><p class="hint">누군가의 마음에 잠시 귀 기울여 봐.</p><div id="posts">
+<div class="post"><span class="tag">답답해</span><p>열심히 하면 언젠가는 알아줄 줄 알았는데, 돌아오는 건 더 많은 일뿐이네. 오늘은 정말 지친다.</p><button class="empathy">♡ 나도 그 마음 알아요</button></div>
+<div class="post"><span class="tag">외로워</span><p>사람들 속에 있는데도 내 편은 하나도 없는 것 같아. 그냥 누군가 내 얘기를 들어줬으면 좋겠어.</p><button class="empathy">♡ 당신의 이야기를 들었어요</button></div>
+</div></section>
+<footer>대나무숲 · 마음이 쉬어가는 곳</footer>
+</main>
+<script>
+let mood='답답해';
+document.querySelectorAll('#moods button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('#moods button').forEach(x=>x.classList.remove('active'));b.classList.add('active');mood=b.textContent}));
+document.getElementById('send').addEventListener('click',()=>{const t=document.getElementById('story');if(!t.value.trim()){alert('마음속 이야기를 먼저 적어줘.');return}const d=document.createElement('div');d.className='post';const tag=document.createElement('span');tag.className='tag';tag.textContent=mood;const p=document.createElement('p');p.textContent=t.value.trim();const n=document.createElement('div');n.className='note';n.textContent='내 브라우저에서만 보이는 미리보기';d.append(tag,p,n);document.getElementById('posts').prepend(d);t.value='';alert('이야기를 화면에 추가했어. 아직 실제 공개 게시 기능은 연결되지 않았어.')});
+document.addEventListener('click',e=>{if(e.target.classList.contains('empathy')){e.target.textContent='♡ 공감했어요';e.target.disabled=true}});
+</script>
+</body></html>
